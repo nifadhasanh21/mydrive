@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyDrive - Minimal File Storage</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Lock Screen Modal -->
+  <div id="lockModal" class="lock-modal">
+    <div class="lock-card">
+      <h2>MyDrive Locked</h2>
+      <p>Enter passkey to access your files</p>
+      <form id="loginForm">
+        <input type="password" id="passInput" placeholder="Enter password" required autofocus />
+        <button type="submit" id="unlockBtn" class="btn btn-primary btn-block">Unlock Drive</button>
+      </form>
+      <div id="lockError" class="lock-error hidden">Incorrect Password!</div>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div class="container blurred" id="mainContainer">
+    <header class="header">
+      <div>
+        <h1>MyDrive</h1>
+        <p class="subtitle">Minimalist Cloud Storage & Viewer</p>
+      </div>
+      <div class="header-right">
+        <span class="badge" id="fileCount">0 Files</span>
+        <button id="logoutBtn" class="btn-logout" title="Lock Drive">Logout 🔒</button>
+      </div>
+    </header>
+
+    <!-- Upload Card -->
+    <section class="upload-card">
+      <input type="file" id="fileInput" hidden />
+      
+      <div class="file-drop-zone" id="dropZone">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+        <p><strong>Click to browse</strong> or drag & drop any file here</p>
+        <span id="selectedFileName" class="file-name-preview">No file chosen</span>
+      </div>
+
+      <button id="uploadBtn" class="btn btn-primary">Upload File</button>
+    </section>
+
+    <div id="statusMessage" class="status-msg hidden"></div>
+
+    <!-- Files Table -->
+    <section class="files-section">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search your files..." />
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>File Name</th>
+              <th>Size</th>
+              <th>Uploaded</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="fileList">
+            <tr>
+              <td colspan="4" class="empty-state">Authentication required...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- File Preview Modal -->
+  <div id="pdfModal" class="modal hidden">
+    <div class="modal-content" id="modalContent">
+      <div class="modal-header">
+        <h3 id="modalTitle">File Preview</h3>
+        <div class="modal-actions">
+          <button id="toggleFullscreenBtn" class="btn-fullscreen" title="Toggle Fullscreen">⛶ Fullscreen</button>
+          <button id="closeModal" class="close-btn">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <iframe id="pdfFrame" src="" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
